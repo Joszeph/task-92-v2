@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import EventEmitter from "eventemitter3";
+import Notification from "./Notification";
 
 export default class Card extends EventEmitter {
   static get events() {
@@ -24,6 +25,8 @@ export default class Card extends EventEmitter {
 
     this.container = document.createElement("div");
     this.container.classList.add("card-container");
+
+    this.notification = new Notification();
   }
 
   render() {
@@ -42,6 +45,9 @@ export default class Card extends EventEmitter {
         type: this._type,
         price: this._price,
       });
+
+      this.notification.render(this._type, this._price);
+      document.querySelector(".notifications").appendChild(this.notification.container);
     });
   }
 }
